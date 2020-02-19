@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+	char c, first, second, third, true = 1;
+	c = getchar();
+	while ( c != EOF)
+	{
+		while (c != '\n')
+		{
+			first = c;
+			if (first == second && second == third && third == first
+				&& first != ' ' && first != '\t')
+			break;
+			c = getchar();
+			second = c;
+			if (first == second && second == third && third == first 
+				&& first != ' ' && first != '\t')
+			break;
+			c = getchar();
+			third = c;
+			if (first == second && second == third && third == first
+				&& first != ' ' && first != '\t')
+			break;
+			c = getchar();
+		}
+		if (first == second && second == third && third == first 
+			&& first != ' ' && first != '\t')
+		{
+			printf("%c%c%c", first, second, third);
+			c = getchar();
+			second = -2;
+			third = -3;
+			while (first == c)
+			{
+				putchar(c);
+				c = getchar();
+			}
+			if (c != first)
+				putchar('\n');
+			first = -1;
+		}
+		c = getchar();
+	}
+	return 0;
+}
