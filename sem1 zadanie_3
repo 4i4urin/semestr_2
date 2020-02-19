@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+	int product;
+	for (int i = 1; i < 11; ++i)
+	{
+		for (int k = 1; k < 11; ++k)
+		{
+			product = k * i;
+			if (k == 10)
+				printf("%d\n", product);
+			 else
+				printf("%d\t", product);
+		}
+	}
+	return 0;
+}
