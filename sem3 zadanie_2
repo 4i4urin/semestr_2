@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+void del(char* s1, char* s2)
+{
+	int end1 = strlen(s1);
+	int end2 = strlen(s2);
+	int flag;
+	int f = 0;
+	for (int i = 0; i < end1; ++i)
+	{
+		flag = 0;
+		for (int k = 0; k < end2; ++k)
+			if (s1[i] == s2[k])
+				flag = 1;
+		if (flag == 0)
+		{
+			s1[f] = s1[i];
+			f += 1; 
+		}
+	}
+	s1[f] = '\0';
+ //
+}
+
+
+int main(int argc, char const *argv[])
+{
+	char string1[20], string2[20];
+	fgets(string1, 20, stdin);
+	fgets(string2, 20, stdin);
+	del(string1, string2);
+	printf("%s\n", string1);	
+	return 0;
+}
