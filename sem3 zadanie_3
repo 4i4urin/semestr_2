@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+void gorizontal(int* number)
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		printf("%d:", i);
+		while (number[i] != 0)
+		{
+			printf("#");
+			number[i] -= 1;
+		}
+		printf("\n");
+	}
+}
+
+
+void vertical(int* number)
+{
+	int max = -1, k = 0, end;
+	for (int i = 0; i < 10; ++i)
+		if (number[i] > max)
+			max = number[i];
+	//printf("%d\n", max);
+	end = max;
+	for (int k = 0; k < end; ++k)
+	{
+		for (int i = 0; i < 10; ++i)
+			{
+				if (number[i] == max)
+				{
+					printf("# ");
+					number[i] -= 1;
+				}
+				else
+					printf("  ");
+				if (i == 9)
+				{
+					max -= 1;
+					printf("\n");
+				}			
+			}	
+	}
+	printf("0 1 2 3 4 5 6 7 8 9\n");
+}
+
+
+int main(int argc, char const *argv[])
+{
+	char str[101], c;
+	int number[10];
+	for (int i = 0; i < 10; ++i)
+		number[i] = 0;
+	c = getchar();
+	while (c != EOF)
+	{
+		if (c >= 48 && c <= 57)
+		{
+			switch(c)
+			{
+				case '0': number[0] += 1; break;
+				case '1': number[1] += 1; break;
+				case '2': number[2] += 1; break;
+				case '3': number[3] += 1; break;
+				case '4': number[4] += 1; break;
+				case '5': number[5] += 1; break;
+				case '6': number[6] += 1; break;
+				case '7': number[7] += 1; break;
+				case '8': number[8] += 1; break;
+				case '9': number[9] += 1; break;
+			}
+		}
+		c = getchar();
+	}
+	printf("\nWhat kind of gistogramma you want to see?\n");
+	printf("1 is gorizontal other numbers are vertical\n");
+	c = getchar();
+	if (c == '1')
+		gorizontal(number);
+	else 
+		vertical(number);
+	return 0;
+}
