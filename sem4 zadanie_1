@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+void result (int* num, int k)
+{
+	long int result = 0;
+	long int power = 1;
+	int p = k;
+	for (int i = 0; i <= k; ++i)
+	{
+		for (int m = 0; m < p; ++m)
+		{
+			power *= 16;
+		}
+		result = result + (num[i] * power);
+		power = 1;
+		p -= 1;
+	}
+	printf("%ld\n", result);
+}
+
+int* changes (int* six, int k)
+{
+	for (int i = 0; i < k + 1; i++)
+	{
+		if (six[i] >= 65 && six[i] <= 70)
+		{
+			switch (six[i])
+			{
+				case 'A': six[i] = 10; break;
+				case 'B': six[i] = 11; break;
+				case 'C': six[i] = 12; break;
+				case 'D': six[i] = 13; break;
+				case 'E': six[i] = 14; break;
+				case 'F': six[i] = 15; break;
+			}
+		} else if (six[i] >= 97 && six[i] <= 102)
+		{
+			switch (six[i])
+			{
+				case 'a': six[i] = 10; break;
+				case 'b': six[i] = 11; break;
+				case 'c': six[i] = 12; break;
+				case 'd': six[i] = 13; break;
+				case 'e': six[i] = 14; break;
+				case 'f': six[i] = 15; break;
+			}
+		} else
+		{
+			switch (six[i])
+			{
+				case '1': six[i] = 1; break;
+				case '2': six[i] = 2; break;
+				case '3': six[i] = 3; break;
+				case '4': six[i] = 4; break;
+				case '5': six[i] = 5; break;
+				case '6': six[i] = 6; break;
+				case '7': six[i] = 7; break;
+				case '8': six[i] = 8; break;
+				case '9': six[i] = 9; break;
+				case '0': six[i] = 0; break;
+			}
+		}
+	}
+	return six;
+}
+
+int main(int argc, char const *argv[])
+{
+	int sixteen[10], c;
+	int k = -1;
+	for (int i = 0; i < 10; i++)
+		sixteen[i] = 0;
+	c = getchar();
+	while (c != '\n')
+	{
+		if (k < 9 && ((c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <=102)))
+		{
+			k += 1;
+			sixteen[k] = c;
+		}
+		c = getchar();
+	}
+	changes(sixteen, k);
+	result(sixteen, k);
+	return 0;
+}
