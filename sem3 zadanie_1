@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+	char c, end, symbl, flag = 0;
+	c = getchar();
+	while (c != EOF)
+	{
+		if ((c < 58 && c > 47) || (c > 64 && c < 91) || (c > 96 && c <123) || (c == 45 && flag == 1))
+		{
+			if (c == 45)
+				{
+					c = getchar();
+					symbl = end;
+					end = c;
+					c = getchar();
+					if (c == 45)
+					{
+						if ((end < 58 && end > 47) || (end > 64 && end < 91) || (end > 96 && end < 123))
+						{
+							if (symbl < end)
+							{
+								symbl += 1;
+								for (symbl; symbl < end + 1; ++symbl)
+									if ((symbl < 58 && symbl > 47) || (symbl > 64 && symbl < 91) || (symbl > 96 && symbl <123))
+										printf("%c", symbl);
+							} else {
+								symbl -= 1;
+								for (symbl; symbl > end - 1; --symbl)
+									if ((symbl < 58 && symbl > 47) || (symbl > 64 && symbl < 91) || (symbl > 96 && symbl <123))
+										printf("%c", symbl);
+							}
+						}
+						printf("-");
+						flag = 0;
+					}
+
+				}
+			else 
+			{
+				symbl = c;
+				c = getchar();
+				if (c == 45)
+				{
+					c = getchar();
+					if ((c < 58 && c > 47) || (c > 64 && c < 91) || (c > 96 && c <123))
+					{
+						end = c;
+						if (symbl < end)
+						{
+							for (symbl; symbl < end + 1; ++symbl)
+								if ((symbl < 58 && symbl > 47) || (symbl > 64 && symbl < 91) || (symbl > 96 && symbl <123))
+									printf("%c", symbl);
+						} else {
+							for (symbl; symbl > end - 1; --symbl)
+								if ((symbl < 58 && symbl > 47) || (symbl > 64 && symbl < 91) || (symbl > 96 && symbl <123))
+									printf("%c", symbl);
+						}
+					}
+					//flag = 0;
+				}
+			}
+		} else {
+			putchar(c);
+			flag = 1;
+		}
+		symbl = 0;
+		// end = 0;
+		c = getchar();
+	}
+	return 0;
+}
+//РАБОТАЕТ КОЕ КАК УСТЬ ПРОБЛЕМЫ С -A-C-F-
