@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+long int result (int* num, int k)
+{
+	long int result = 0;
+	long int power = 1;
+	int p = k;
+	for (int i = 0; i <= k; ++i)
+	{
+		for (int m = 0; m < p; ++m)
+		{
+			power *= 16;
+		}
+		result = result + (num[i] * power);
+		power = 1;
+		p -= 1;
+	}
+	return result;
+}
+
+int* changes (int* six, int k)
+{
+	for (int i = 0; i < k + 1; i++)
+	{
+		if (six[i] >= 65 && six[i] <= 70)
+		{
+			six[i] = six[i] - 55;
+		} else if (six[i] >= 97 && six[i] <= 102)
+		{
+			six[i] = six[i] - 87;
+		} else if (six[i] >= 48 && six[i] <= 57)
+		{
+			six[i] = six[i] - 48;
+		} else
+		{
+			printf("Input is incorect\n");
+		}
+	}
+	return six;
+}
+
+int account (long int* number)
+{
+	int bit;
+	while (*number != 0)
+	{
+		if (*number % 2 == 1)
+			bit += 1;
+		*number = *number >> 2;
+		printf("%ld\n", *number);
+	}
+	return bit;
+}
+
+int main(int argc, char const *argv[])
+{
+	int sixteen[10], c;
+	int k = -1;
+	for (int i = 0; i < 10; i++)
+		sixteen[i] = 0;
+	c = getchar();
+	while (c != '\n')
+	{
+		if (k < 9 && ((c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <=102)))
+		{
+			k += 1;
+			sixteen[k] = c;
+		}
+		c = getchar();
+	}
+	changes(sixteen, k);
+	long int res;
+	int score;
+	res = result(sixteen, k);
+	printf("%ld\n", res);
+	score = account(&res);
+	printf("%d\n", score);
+	return 0;
+}
