@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+int search(char c, char* s1)
+{
+	int numb = -1;
+	for (int i = 0; i < strlen(s1) - 1; ++i)
+	{
+		if (s1[i] == c)
+		{
+			numb = i;
+			break;
+		}
+	}
+	return numb;
+}
+
+int main(int argc, char const *argv[])
+{
+	char s1[20], c;
+	int out;
+	fgets(s1, 20, stdin);
+	while (true)
+	{
+		c = getchar();
+		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'z'))
+			break;
+	}
+	out = search(c, s1);
+	printf("%d\n", out);
+	return 0;
+}
