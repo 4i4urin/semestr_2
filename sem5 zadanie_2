@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+
+#define PI 3.14159265
+
+
+double calculator(float a, float b, char c)
+{
+	double result;
+	switch(c)
+	{
+		case '+': result = a + b; break;
+		case '-': result = a - b; break;
+		case '*': result = a * b; break;
+		case '/': result = a / b; break;
+		case '%': result = (int)a / (int)b; break;
+		case '^': result = pow(a, b); break;
+		default: printf("Unknown simbol\n");
+	}
+	return result;
+}
+
+
+double trigonometry(char* str, float b)
+{
+	double result = 0;
+	if (str[0] == 's' && str[1] == 'i' && str[2] == 'n')
+		result = sin((b * PI)/180);
+	else if (str[0] == 'c' && str[1] == 'o' && str[2] == 's')
+		result = cos((b * PI)/180);
+	else if (str[0] == 't' && str[1] == 'a' && str[2] == 'n')
+		result = tan((b * PI)/180);
+	else if (str[0] == 'c' && str[1] == 't' && str[2] == 'g')
+		result = 1/(tan((b * PI)/180));
+	else
+		printf("Input is incorect\n");
+	return result;
+}
+
+
+int main(int argc, char const *argv[])
+{
+	float a, b;
+	char c, str[3];
+	bool input_1;
+	double result;
+	input_1 = scanf("%f", &a);
+	if (input_1 == true)
+	{
+		scanf("%c %f", &c, &b);
+		result = calculator(a, b, c);
+	}
+	else
+	{
+		scanf("%s", str);
+		scanf("%f", &b);
+		result = trigonometry(str, b);
+	}
+	printf("%.2f\n", result);
+	return 0;
+}
