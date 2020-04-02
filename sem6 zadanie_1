@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+	int num[10];
+	int i, z;
+	for (i = 0; i < 10; ++i)
+		scanf("%d", &num[i]);
+	for (i = 0; i < 9; ++i) 
+	{
+		for (int j = 0; j < 9 - i; ++j)
+		{
+			if (num[j] > num[j + 1])
+			{
+				z = num[j];
+				num[j] = num[j + 1];
+				num[j + 1] = z;
+			}
+		}
+	}
+	for (int k = 0; k < 10; ++k)
+		printf("%d\n", num[k]);
+	return 0;
+}
