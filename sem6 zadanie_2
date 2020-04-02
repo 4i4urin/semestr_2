@@ -1,0 +1,69 @@
+#include "stdio.h"
+
+
+int swap(int*, int, int);
+int bin_search(int*, int, int, int);
+void out(int*, int);
+
+
+int main(int argc, char const *argv[])
+{
+	int num[10], i, find, x;
+	for (i = 0; i < 10; ++i)
+		scanf("%d", &num[i]);
+	printf("What do you want to find?\n");
+	scanf("%d", &x);
+	find = swap(num, i, x);
+	printf("%d\n", find);
+	return 0;
+}
+
+
+int swap(int* arr, int i, int x)
+{
+	int z, find;
+	for (i = 0; i < 9; ++i)
+	{
+		for (int j = 0; j < 9 - i; ++j)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				z = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = z;
+			}
+		}
+	}
+	out(arr, i);
+	int low = 0, high = i;
+	find = bin_search(arr, high, low, x);
+	return find;
+}
+
+
+int bin_search(int* arr, int high, int low, int x)
+{
+	int midle = (low + high)/2;
+	if (x < arr[midle] && low != high)
+	{
+		high = midle - 1;
+		bin_search(arr, high, low, x);
+	} else if (x > arr[midle] && low != high)
+	{
+		low = midle + 1;
+		bin_search(arr, high, low, x);
+	} else if (x == arr[midle])
+	{
+		return midle;
+	} else
+	{
+		return -1;
+	}
+}
+
+void out(int* arr, int i)
+{
+	 for (i = 0; i < 10; ++i)
+		printf("%d ", arr[i]);
+	printf("\n");	
+}
