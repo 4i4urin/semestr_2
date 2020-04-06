@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define SWAP(a, b) int temp = a; a = b; b = temp;
+
 int main(int argc, char const *argv[])
 {
 	int num[10];
@@ -12,9 +14,7 @@ int main(int argc, char const *argv[])
 		{
 			if (num[j] > num[j + 1])
 			{
-				z = num[j];
-				num[j] = num[j + 1];
-				num[j + 1] = z;
+				SWAP(num[j], num[j + 1])
 			}
 		}
 	}
