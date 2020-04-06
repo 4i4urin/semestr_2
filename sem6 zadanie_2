@@ -1,7 +1,8 @@
 #include "stdio.h"
 
+#define SWAP(a, b) int temp = a; a = b; b = temp;
 
-int swap(int*, int, int);
+int swap_f(int*, int, int);
 int bin_search(int*, int, int, int);
 void out(int*, int);
 
@@ -13,13 +14,13 @@ int main(int argc, char const *argv[])
 		scanf("%d", &num[i]);
 	printf("What do you want to find?\n");
 	scanf("%d", &x);
-	find = swap(num, i, x);
+	find = swap_f(num, i, x);
 	printf("%d\n", find);
 	return 0;
 }
 
 
-int swap(int* arr, int i, int x)
+int swap_f(int* arr, int i, int x)
 {
 	int z, find;
 	for (i = 0; i < 9; ++i)
@@ -28,9 +29,7 @@ int swap(int* arr, int i, int x)
 		{
 			if (arr[j] > arr[j + 1])
 			{
-				z = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = z;
+				SWAP(arr[j], arr[j + 1]);
 			}
 		}
 	}
