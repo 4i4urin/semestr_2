@@ -1,0 +1,90 @@
+#include <stdio.h> //Код гавно держится на костылях работает при определённых кейсах ничего лучше я придумать не смог задание ебанутое
+
+#define SWAP(a,b) int temp = a; a = b; b = temp;
+
+void quik_sort_cikle(int*, int, int);
+void out(int*);
+
+int main(int argc, char const *argv[])
+{
+	int i, num[20];
+	for (i = 0; i < 20; ++i)
+		scanf("%d", &num[i]);
+	i -= 1;
+	quik_sort_cikle(num, 0, i);
+	out(num);
+	return 0;
+}
+
+
+void quik_sort_cikle(int* arr, int left, int right)
+{
+	int i, j, p, in = 1, max;
+	max = right;
+	i = left; j = right;
+	p = arr[(left + right) / 2];
+	do
+	{
+		while ((arr[i] < p) && (i < right)) i++;
+		while ((p < arr[j]) && (j > left)) j--;
+		if (i <= j)
+		{
+			SWAP(arr[i], arr[j]);
+			i++; j--;
+		}
+	} while (i <= j);
+	out(arr);
+	while (in != 10)
+	{
+		while (left < j)
+		{
+			i = left; right = j;
+			p = arr[(left + right) / 2];
+			do
+			{
+				while ((arr[i] < p) && (i < right)) i++;
+				while ((p < arr[j]) && (j > left)) j--;
+				if (i <= j)
+				{
+					SWAP(arr[i], arr[j]);
+					i++; j--;
+				}
+			} while (i <= j);
+		}
+		while (i < right)
+		{
+			left = i; j = right;
+			p = arr[(left + right) / 2];
+			do
+			{
+				while ((arr[i] < p) && (i < right)) i++;
+				while ((p < arr[j]) && (j > left)) j--;
+				if (i <= j)
+				{
+					SWAP(arr[i], arr[j]);
+					i++; j--;
+				}
+			} while (i <= j);
+		}
+		out(arr);
+		if (in == 4)
+		{
+			left = 0; right = max/2;
+		}else 
+		{
+		left = (max / 2) + 1; right = max; 
+		}
+
+		in += 1;
+	}
+
+}
+
+void out(int* arr)
+{
+	for (int i = 0; i < 20; ++i)
+		printf("%d ", arr[i]);
+	printf("\n");	
+}
+
+//23 345 565 2839 47 563 5 46 34792  238 5794 237 85 258 60 33 2 57 69 60 - Рабочий ввод
