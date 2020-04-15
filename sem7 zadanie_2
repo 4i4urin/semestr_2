@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* input();
+
+int main(int argc, char const *argv[])
+{
+	printf("This program will remembr everi simbol until '\\n' or EOF\n");
+	char* str;
+	str = input();
+	printf("%s", str);
+	int n = strlen(str);
+	printf("Size of array = %d\n", n);
+	free(str);
+	return 0;
+}
+
+char* input()
+{
+	char* ptr = calloc(1, sizeof(char));
+	char c;
+	int i = 0;
+	while (1)
+	{
+		c = getchar();
+		if (c == '\n')
+			break;
+		if (c == EOF)
+			break;
+		*(ptr + i) = c;
+		i += 1;
+		ptr = (char*)realloc(ptr, (i + 1) * sizeof(char));
+	}
+	*(ptr + i) = c;
+	ptr = (char*)realloc(ptr, (i + 1) * sizeof(char));
+	*(ptr + i + 1) = '\0';
+	return ptr;
+}
