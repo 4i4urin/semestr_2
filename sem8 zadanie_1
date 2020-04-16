@@ -12,6 +12,8 @@ int main(int argc, char const *argv[])
 	str1 = input();
 	str2 = input();
 	printf("%d\n", strend(str1, str2));
+	free(str1);
+	free(str2);
 	return 0;
 }
 
