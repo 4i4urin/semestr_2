@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 	while (true)
 	{
 		c = getchar();
-		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'z'))
+		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 			break;
 	}
 	out = search(c, s1);
