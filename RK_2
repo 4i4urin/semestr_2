@@ -1,0 +1,565 @@
+//Task 11////////
+/////////////////
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* input(int*);
+char *strchange(char*, char, char);
+
+int main(int argc, char const *argv[])
+{
+	char c, new_c;
+	char *str;
+	c = getchar();
+	new_c = getchar();
+	new_c = getchar();
+	int k;
+	str = input(&k);
+	str = strchange(str, c, new_c);
+	printf("%s\n", str);
+	free(str);
+
+
+	return 0;
+}
+
+
+char *strchange(char *str, char c, char new_c)
+{
+	int k = strlen(str);
+	for (int i = 0; i < k; ++i)
+	{
+		if (str[i] == c)
+			str[i] = new_c;
+	}
+	return str;
+}
+
+char* input(int* k)
+{
+	char c;
+	int i = 0;
+	char* arr = calloc(1, sizeof(char));
+	if ((c = getchar()) == '\n')
+		c = getchar();
+	do
+	{
+		arr[i] = c;
+		i += 1;
+		arr = realloc(arr, i * sizeof(char));
+	} while ((c = getchar()) != EOF);
+	arr[i] = '\0';
+	arr = realloc(arr, (i - 1) * sizeof(char));
+	*k = i;
+	return arr;
+}
+
+///////////
+//task 7///
+///////////
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char* strcat(char*, char*);
+
+int main(int argc, char const *argv[])
+{
+	char str_1[20];
+	char str_2[20];
+	scanf("%s", str_1);
+	scanf("%s", str_2);
+	char* res = strcat(str_1, str_2);
+	printf("%s\n", res);
+	return 0;
+}
+
+char* strcat(char* str_1, char* str_2)
+{
+	int i;
+	for (i = 0; str_1[i] != '\0'; ++i)
+		;
+	int j;
+	for (j = 0; str_2[j] != '\0'; ++j)
+		;
+	int k = i + j + 1;
+	j = 0;
+	char* res = calloc(k, sizeof(char));
+	for (int k = 0; k < i; ++k)
+		res[k] = str_1[k];
+	for (;i < k; i++, j++)
+	{
+		res[i] = str_2[j];
+	}
+	return res;
+}
+
+///////////////////
+//task 4//////////
+/////////////////
+#include <stdio.h>
+#include <stdlib.h>
+
+void quick_sort(int*, int, int);
+
+int main(int argc, char const *argv[])
+{
+	int N;
+	scanf("%d", &N);
+	int* numbers = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &numbers[i]);
+	quick_sort(numbers, 0, N - 1);
+	for (int i = 0; i < N; ++i)
+	{
+		if ((numbers[i] % 2) != 0)
+			printf("%d ", numbers[i]);
+	}
+	return 0;
+}
+
+void quick_sort(int* arr, int left, int right)
+{
+	int i, j, p;
+	i = left; j = right;
+	p = arr[(left + right)/2];
+	do
+	{
+		while((arr[i] < p) && (i < right)) i++;
+		while((arr[j] > p) && (j > left)) j--;
+		if (i <= j)
+		{
+			int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+			i++; j--;
+		}
+	}while(i <= j);
+	if (j > left) quick_sort(arr, left, j);
+	if (i < right) quick_sort(arr, i, right);
+}
+
+
+
+//////////////
+///task 1////
+////////////
+#include <stdio.h>
+#include <stdlib.h>
+
+void quick_sort(int*, int, int);
+
+int main(int argc, char const *argv[])
+{
+	int N, M;
+	scanf("%d", &N);
+	scanf("%d", &M);
+	int* numbers = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &numbers[i]);
+	quick_sort(numbers, 0, N - 1);
+	for (int i = N - 1; i >= N - M; i--)
+		printf("%d ", numbers[i]);
+	return 0;
+}
+
+void quick_sort(int* arr, int left, int right)
+{
+	int i, j, p;
+	i = left; j = right;
+	p = arr[(left + right)/2];
+	do 
+	{
+		while(arr[i] < p && i < right) i++;
+		while(arr[j] > p && j > left) j--;
+		if (i <= j)
+		{
+			int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+			i++; j--;
+		}
+	}while(i <= j);
+	if (i < right) quick_sort(arr, i, right);
+	if (j > left) quick_sort(arr, left, j);
+}
+
+///////////
+//task 2///
+///////////
+#include <stdio.h>
+#include <stdlib.h>
+
+void out(int*, int);
+
+int main(int argc, char const *argv[])
+{
+	int N;
+	scanf("%d", &N);
+	int* num = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &num[i]);
+	out(num, N);
+	return 0;
+}
+
+void out(int* arr, int n)
+{
+	for (int i = 0; i < n; ++i)
+		if ((arr[i] % 2) == 0)
+			printf("%d ", arr[i]);
+}
+
+///////////
+//task 8///
+///////////
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char* input();
+char* stricpy(char*, char*);
+
+int main(int argc, char const *argv[])
+{
+	char* str_1;
+	char* res;
+	int k;
+	str_1 = input();
+	res = stricpy(res, str_1);
+	printf("%s", res);
+	return 0;
+}
+
+char* stricpy(char* res, char* str)
+{
+	int k;
+	for (k = 0; str[k] != '\0'; k++);
+	res = calloc(k, sizeof(char));
+	for (int i = 0; i < k; ++i)
+		res[i] = str[i];
+	return res;
+}
+
+char* input()
+{
+	char *ptr = calloc(1, sizeof(char));
+	int i = 0, c = getchar();
+	if (c == '\n')
+		c = getchar();
+	do
+	{
+		*(ptr + i) = c;
+		i++;
+		ptr = realloc(ptr, (i+1)*sizeof(char));
+	}while((c = getchar()) != EOF);
+	*(ptr + i) = '\0';
+	return ptr;
+}
+
+/////////
+//task 5/
+/////////
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SWAP(a, b) int temp = a; a = b; b = a;
+
+int* new_arr(int *, int*, int *, int*, int*);
+void quick_sort(int* arr, int left, int right);
+
+int main(int argc, char const *argv[])
+{
+	int N, M;
+	int* arr_1;
+	int* arr_2;
+	scanf("%d", &N);
+	arr_1 = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &arr_1[i]);
+	scanf("%d", &M);
+	arr_2 = calloc(M, sizeof(int));
+	for (int i = 0; i < M; ++i)
+		scanf("%d", &arr_2[i]);
+	int *sort_arr;
+	int k;
+	sort_arr = new_arr(arr_1, arr_2, &N, &M, &k);
+	quick_sort(sort_arr, 0, k - 1);
+	for (int i = 0; i < k; ++i)
+	{
+		if (sort_arr[i] != -1000)
+			printf("%d ", sort_arr[i]);
+	}
+    free(sort_arr);
+	return 0;
+}
+
+
+int* new_arr(int * arr_1, int* arr_2, int* N, int* M, int* k)
+{
+	int flag = 0;
+	if (*N >= *M)// Меньший массив это M то есть arr_2 его берём за опорный
+	{
+		*k = *M;
+		for (int i = 0; i < *M; ++i)
+		{
+			for (int j = 0; j < *N; ++j)
+			{
+				if (arr_2[i] == arr_1[j])
+					flag = 1;
+			}
+			if (flag == 0)
+				arr_2[i] = -1000;
+			flag = 0;
+		}
+		free(arr_1);
+		return arr_2;
+	} else//меньший массив arr_1 длинной N
+	{
+		*k = *N;
+		for (int i = 0; i < *N; ++i)
+		{
+			for (int j = 0; j < *M; ++j)
+			{
+				if (arr_1[i] == arr_2[j])
+					flag = 1;
+			}
+			if (flag == 0)
+				arr_1[i] = -1000;
+			flag = 0;
+		}
+		free(arr_2);
+		return arr_1;
+	}
+}
+
+
+void quick_sort(int* arr, int left, int right)
+{
+	int i, j, p, y;
+	srand(time(NULL));
+	i = left; j = right;
+	y = left + rand() % (right - left);
+	p = arr[y];
+	do 
+	{
+		while ((arr[i] < p) && (i < right)) i++;
+		while ((arr[j] > p) && (j > left)) j--;
+		if (i <= j)
+		{
+			SWAP(arr[i], arr[j]);
+			i++; j--;
+		}
+	} while (i <= j);
+	if (left < j) quick_sort(arr, left, j);
+	if (right > i) quick_sort(arr, i, right);
+}
+
+
+//////////////
+// task 12////
+//////////////
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* input(int*);
+char *strchange(char*, char, char);
+
+int main(int argc, char const *argv[])
+{
+	char c, new_c;
+	char *str;
+	c = getchar();
+	new_c = getchar();
+	new_c = getchar();
+	int k;
+	str = input(&k);
+	str = strchange(str, c, new_c);
+	printf("%s\n", str);
+	free(str);
+
+
+	return 0;
+}
+
+
+char *strchange(char *str, char c, char new_c)
+{
+	int k = strlen(str);
+	for (int i = 0; i < k; ++i)
+	{
+		if (str[i] == c)
+			str[i] = new_c;
+	}
+	return str;
+}
+
+char* input(int* k)
+{
+	char c;
+	int i = 0;
+	char* arr = calloc(1, sizeof(char));
+	if ((c = getchar()) == '\n')
+		c = getchar();
+	do
+	{
+		arr[i] = c;
+		i += 1;
+		arr = realloc(arr, i * sizeof(char));
+	} while ((c = getchar()) != EOF);
+	arr[i] = '\0';
+	//arr = realloc(arr, (i - 1) * sizeof(char));
+	*k = i;
+	return arr;
+}
+
+//////////////
+//task 10/////
+//////////////
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char* input();
+int strcmp(char*, char*);
+
+int main(int argc, char const *argv[])
+{
+	char str_1[100], str_2[100];
+	scanf("%s", str_1);
+	scanf("%s", str_2);
+	printf("%d\n", strcmp(str_1, str_2));
+	return 0;
+}
+
+int strcmp(char* str_1, char* str_2)
+{
+	int i = 0, j = 0;
+	for (i, j; (str_1[i] != '\0') && (str_2[j] != '\0'); ++i, ++j)
+	{
+		if (str_1[i] != str_2[j])
+		{
+			if (str_1[i] > str_2[j])
+				return 1;
+			else 
+				return -1;
+		}
+	}
+	return 0;
+}
+
+
+/////////////
+//task 9/////
+/////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char* input(int*);
+
+int main(int argc, char const *argv[])
+{
+	int k;
+	char* str = input(&k);
+	printf("%d\n", k);
+	return 0;
+}
+
+char* input(int* k)
+{
+	*k = 0;
+	char c;
+	char* ptr = calloc(1, sizeof(char));
+	while ((c = getchar()) != EOF)
+	{
+		*(ptr + *k) = c;
+		*k += 1;
+		ptr = realloc(ptr, (*k + 1) * sizeof(char));
+	}
+	return ptr;
+}
+
+/////////////
+// task 6////
+/////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void quick_sort(int*, int, int);
+
+int main(int argc, char const *argv[])
+{
+	int N, M;
+	scanf("%d", &N);
+	scanf("%d", &M);
+	int* num = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &num[i]);
+	quick_sort(num, 0, N - 1);
+	for (int i = 0; i < N; ++i)
+		if (num[i] > M)
+			printf("%d ", num[i]);
+	return 0;
+}
+
+void quick_sort(int* arr, int left, int right)
+{
+	int i, j, p;
+	i = left; j = right;
+	p = arr[(left + right) / 2];
+	do
+	{
+		while(arr[i] < p && i < right) i++;
+		while(arr[j] > p && j > left) j--;
+		if (i <= j)
+		{
+			int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+			i++; j--;
+		}
+	}while(i <= j);
+	if (i < right) quick_sort(arr, i, right);
+	if (j > left) quick_sort(arr, left, j);
+}
+
+//////////////
+//task 3//////
+//////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char const *argv[])
+{
+	int N;
+	scanf("%d", &N);
+	int* num = calloc(N, sizeof(int));
+	for (int i = 0; i < N; ++i)
+		scanf("%d", &num[i]);
+	for (int i = N - 1; i >= 0; --i)
+		printf("%d ", num[i]);
+	return 0;
+}
+
+///////////////////
+//.....ВСЁ.......//
+///////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
