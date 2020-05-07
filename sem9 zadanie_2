@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char* input(int*, FILE*);
+
+int main(int argc, char const *argv[])
+{
+	if (argc != 3)
+	{
+		printf("Error: expected names of files\n");
+		return 500;
+	}
+	FILE* first = fopen(argv[1], "r");
+	if (first == 0)
+	{
+		printf("Error no such file 1\n");
+		return 301;
+	}
+	FILE* second = fopen(argv[2], "r");
+	if (second == 0)
+	{
+		printf("Error no such file 2\n");
+		return 302;
+	}
+	int flag_1 = 1, flag_2 = 1;
+	char* str_first;
+	char* str_second;
+	while (flag_1 != 0 && flag_2 != 0)
+	{
+		str_first = input(&flag_1, first);
+		str_second = input(&flag_2, second);
+		printf("%s", str_first);
+		printf("%s", str_second);
+	}
+	if (flag_1 == 0)
+	{
+		while (flag_2 != 0)
+		{
+			str_second = input(&flag_2, second);
+			printf("%s", str_second);
+		}
+	} else
+	{
+		while (flag_1 != 0)
+		{
+			str_first = input(&flag_1, first);
+			printf("%s", str_first);
+		}
+	}
+	free(str_first);
+	free(str_second);
+	fclose(first);
+	fclose(second);
+	return 0;
+}
+
+char* input(int* flag, FILE* txt)
+{
+	char* ptr = calloc(1, sizeof(char));
+	int i = 0, c;
+	while ((c = getc(txt)) != '\n' && c != EOF)
+	{
+		*(ptr + i) = c;
+		i += 1;
+		ptr = realloc(ptr, (i + 1)*sizeof(char));
+	}
+	if (c == '\n')
+	{
+		*(ptr + i) = '\n';
+		i += 1;
+		ptr = realloc(ptr, (i + 1)*sizeof(char));
+		*(ptr + i) = '\0';
+		return ptr;
+	}
+	if (c == EOF)
+	{
+		*(ptr + i) = '\n';
+		i += 1;
+		ptr = realloc(ptr, (i + 1)*sizeof(char));
+		*(ptr + i) = '\0';
+		*flag = 0;
+		return ptr;
+	}
+}
