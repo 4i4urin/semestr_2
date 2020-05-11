@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char* input(int*, FILE*);
+void output(char*, int, int);
+int from_argv(int*, int*, const char**);
+int num_from_str(const char*);
+
+static int p = 1;
+static int n = 1;
+
+void output(char* str, int long_p, int num_s)
+{
+	int i = 0;
+	int k = num_s;
+	while (str[i] != '\0')
+	{
+		printf("%d: ", n);
+		for (i; i < num_s && str[i] != '\0'; ++i)
+		{
+			putchar(str[i]);
+		}
+		printf("\n");
+		n += 1; num_s += k;
+		if (n > long_p)
+		{
+			printf("-- Page %d --\n", p);
+			p += 1; n = 1;
+		}
+	}
+}
+
+
+int main(int argc, char const *argv[])
+{
+	if (argc != 5)
+	{
+		printf("Error: iput is false\n");\
+		printf("Example -p 2 -n 5\n");
+		exit(500);
+	}
+	int long_page, num_simbols;
+	if (1 != from_argv(&long_page, &num_simbols, argv))
+	{
+		printf("Error: inpur is false\n");
+		printf("Error pointers\n");
+		exit(300);
+	}
+	FILE* txt = fopen("for_3.txt", "r");
+	int flag = 1;
+	char* str;
+	while (flag != 0)//цикл считывания и вывода без запоминания строк
+	{
+		str = input(&flag, txt);
+		output(str, long_page, num_simbols);
+	}
+	if (n <= long_page && n != 1)// костыль, если случилось условие
+		printf("-- Page %d --\n", p);// вывода page ранее то n = 1 
+	free(str);// и page выводится дважды
+	fclose(txt);
+	return 0;
+}
+
+char* input(int* flag, FILE* txt)//не считает '\n' за символ
+{
+	char* ptr = calloc(1, sizeof(char));
+	int i = 0, c;
+	while ((c = getc(txt)) != '\n' && c != EOF)
+	{
+		*(ptr + i) = c;
+		i += 1;
+		ptr = realloc(ptr, (i + 1) * sizeof(char));
+	}
+	if (c == '\n')
+	{
+		*(ptr + i) = '\0';
+		return ptr;
+	} else if (c == EOF)
+	{
+		*flag = 0;
+		*(ptr + i) = '\0';
+		return ptr;
+	}
+}
+
+
+int from_argv(int* p, int* n, const char** argv)//проверка ввода на валидность
+{
+	if (argv[1][0] == '-' && argv[1][1] == 'p')
+	{
+		*p = num_from_str(argv[2]);
+		if (argv[3][0] == '-' && argv[3][1] == 'n')
+		{
+			*n = num_from_str(argv[4]);
+			return 1;
+		} else
+		return 0;
+	} else if (argv[1][0] == '-' && argv[1][1] == 'n')
+	{
+		*n = num_from_str(argv[2]);
+		if (argv[3][0] == '-' && argv[3][1] == 'p')
+		{
+			*p = num_from_str(argv[4]);
+			return 1;
+		} else
+		return 0;
+	} else
+		return 0;
+}
+
+int num_from_str(const char* str)//вытаскивает из строки число
+{
+	int res = 0;
+	for (int i = 0; str[i] != '\0'; ++i)
+	{
+		res *= 10;
+		if (str[i] <= '9' && str[i] >= '0')
+			res = res + (str[i] - '0');
+		else
+		{
+			printf("No such number\n");
+			exit(401);
+		}
+	}
+	return res;
+}
