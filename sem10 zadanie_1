@@ -1,0 +1,157 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct string
+{
+	char* title;
+	int numb;
+};
+
+int from_argv(const char**, FILE*);
+int string_cmd(const char*, char*);
+char* input(int*, FILE*);
+void proverka(struct string*, int*);
+void shell_sort(struct string*, int);
+
+
+int main(int argc, char const *argv[])
+{
+	int flag = 0; //ASC flag = 0 DESC flag = 1
+	FILE* txt;
+	if (argc != 2 && argc != 4)
+	{
+		printf("Error: expected name of file and some point\n");
+		printf("Exempl: -o DESC file.txt\n");
+		exit(100);
+	}
+	txt = fopen(argv[1], "r");
+	if (txt == 0)
+	{
+		printf("No such file\n");
+		exit(600);
+	}
+	if (argc == 4)
+		flag = from_argv(argv, txt);
+	int Eof = 1;
+	struct string *file = calloc(1, sizeof(struct string));
+	int i = 0;
+	while (Eof != 0)
+	{
+		(file + i)->title = input(&Eof, txt);
+		(file + i)->numb = 1;
+		if (i != 0)
+		{
+			proverka(file, &i);
+			file = realloc(file, (i + 1)* sizeof(struct string));
+		}
+		i += 1; file = realloc(file, (i + 1) * sizeof(struct string));
+	}
+	file = realloc(file, i * sizeof(struct string));//удаление лишней памяти
+	shell_sort(file, i - 1);
+	if (flag == 0)
+		for (int j = 0; j < i; ++j)
+			printf("%s %d\n", (file + j)->title, (file + j)->numb);
+	else
+		for (i -= 1;i >= 0; i--)
+			printf("%s %d\n", (file + i)->title, (file + i)->numb);
+	return 0;
+}
+
+void shell_sort(struct string* ptr_s, int n)
+{
+	int gap, i, j;
+	for (gap = n/2; gap > 0; gap /= 2)
+	{
+		for (i = gap; i < n; ++i)
+		{//                                          prt_s[j] > ptr_s[j + gap]
+			for (j = i - gap; j >= 0 && string_cmd(ptr_s[j].title, ptr_s[j + gap].title) == 0; j -= gap)
+			{
+				struct string temp = ptr_s[j];
+				ptr_s[j] = ptr_s[j + gap];
+				ptr_s[j + gap] = temp;
+			}
+		}
+	}
+}
+
+int string_cmd(const char* s1, char* s2)//сравнивает строки
+{                                       // flag = 1 равны flag = 0 первая больше второй
+	int flag, i;						// flag = -1 вторая больше первой в программе это не используется
+	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; ++i)
+	{
+		if (s1[i] != s2[i])
+		{
+			if (s1[i] > s2[i])
+				flag = 0;
+			else
+				flag = -1;
+			return flag;
+		}
+	}
+	if (s1[i] > s2[i])
+		flag = 0;
+	else if (s1[i] < s2[i])
+	{
+		flag = -1;
+	}else
+		flag = 1;
+	return flag;
+}
+
+void proverka(struct string* ptr_s, int* i)
+{
+	for (int j = *i - 1; j >= 0; --j)
+	{
+		if (string_cmd((ptr_s + *i)->title, (ptr_s + j)->title) == 1)
+		{
+			(ptr_s + j)->numb += 1;
+			*i -= 1;
+			break;
+		}
+	}
+}
+
+char* input(int* Eof, FILE* txt)
+{
+	char* ptr = calloc(1, sizeof(char));
+	int i = 0, c = getc(txt);
+	while (c != '\n' && c != EOF)
+	{
+		*(ptr + i) = c;
+		i += 1;
+		ptr = realloc(ptr, (i + 1) * sizeof(char));
+		c = getc(txt);
+	}
+	if (c == '\n')
+	{
+		*(ptr + i) = '\0';
+		return ptr;
+	} else if (c == EOF)
+	{
+		*Eof = 0;
+		*(ptr + i) = '\0';
+		return ptr;
+	}
+}
+
+int from_argv(const char** argv, FILE* txt)
+{
+	int flag;
+	if (argv[2][0] == '-' && argv[2][1] == 'o')
+	{
+		flag = string_cmd(argv[3], "DESC");
+		if (flag != 1)
+			flag = 0;
+		if (flag == 0 && string_cmd(argv[3], "ASC") != 1)
+		{
+			printf("Error: don't know this point %s\n", argv[3]);
+			puts("Expected ASC or DESC");
+			exit(200);
+		}
+	} else
+	{
+		printf("Error: expected -o\n");
+		exit(900);
+	}
+	return flag;
+}
