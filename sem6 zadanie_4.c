@@ -8,7 +8,7 @@
 #define N 3000000000
 #define LONG_ARR 100
 
-void quick_sort_random(int*, int, int);
+void quick_sort(int*, int, int);
 void out(int*, int);
 void counting_sort(int*, int, int);
 
@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
 	char c = getchar();
 	printf("\n");
 	if (c == 'q') 
-		quick_sort_random(num, 0, LONG_ARR - 1);
+		quick_sort(num, 0, LONG_ARR - 1);
 	else if (c == 'c')
 		counting_sort(num, N, LONG_ARR);
 	else 
@@ -64,7 +64,7 @@ void counting_sort(int* arr, int k, int n)
 }
 
 
-void quick_sort_random(int* arr, int left, int right)
+void quick_sort(int* arr, int left, int right)
 {
 	int i, j, p, y;
 	srand(time(NULL));
@@ -81,8 +81,8 @@ void quick_sort_random(int* arr, int left, int right)
 			i++; j--;
 		}
 	} while (i <= j);
-	if (left < j) quick_sort_random(arr, left, j);
-	if (right > i) quick_sort_random(arr, i, right);
+	if (left < j) quick_sort(arr, left, j);
+	if (right > i) quick_sort(arr, i, right);
 }
 
 void out(int* arr, int max)
